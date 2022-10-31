@@ -1,0 +1,91 @@
+@import '../colors.sass'
+
+input:focus
+  -webkit-appearance: none
+  -moz-appearance: none
+  outline: none
+
+.search
+  display: flex
+  border-radius: 5px
+  border: 1px solid var(--grey)
+  height: 46px
+  &:hover
+    border: 1px solid var(--caramel)
+  &:active
+    border: 1px solid var(--caramel)
+  &__input
+    background-color: transparent
+    padding: 0 16px
+    height: 100%
+    border: none
+  &__divider
+    margin: 12px 0
+    border-left: 1px solid var(--grey)
+  &__btn
+    padding: 0 8px
+    color: var(--caramel)
+    background-color: transparent
+    height: 100%
+    font-weight: 500
+    border: none
+    &:hover
+      color: var(--caramel-hover)
+    &:active
+      color: var(--caramel-active)
+
+// Чекбок
+input[type='checkbox']
+  -webkit-appearance: none
+  -moz-appearance: none
+  position: relative
+  left: 0px
+  top: 0px
+  height: 20px
+  min-width: 20px
+  margin: 0
+  cursor: pointer
+  border: 2px solid var(--grey)
+  border-radius: 3px
+  background: var(--white)
+  transition: background .3s, border-color .3s, box-shadow .2s
+  &:after
+    display: block
+    content: ''
+    opacity: 0
+    position: relative
+    transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s)
+    width: 4px
+    height: 10px
+    border: 2px solid var(--blue)
+    left: 5px
+    top: 1px
+    border-top: none
+    border-left: none
+    transform: rotate(var(--r, 20deg))
+
+  &:hover
+    &:not(:checked)
+      border-color: var(--blue)
+  
+
+  &:checked
+    --r: 43deg
+    border-color: var(--blue)
+    box-shadow: 0 0 0 var(--blue)
+
+  &:not(.switch)
+    &:after
+      opacity: var(--o, 0)
+  
+    &:checked
+      --o: 1
+  
+
+  & + label
+    font-size: 1vw
+    line-height: 20px
+    display: inline-block
+    vertical-align: top
+    cursor: pointer
+    margin-left: 8px

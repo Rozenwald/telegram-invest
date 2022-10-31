@@ -1,0 +1,10 @@
+<svg
+  id="arrow"
+  width="6"
+  height="12"
+  viewBox="0 0 6 12"
+  xmlns="http://www.w3.org/2000/svg">
+<path d="M0.666687 1.33331L5.33335 5.99998L0.666687 10.6666"
+  stroke-linecap="round"
+  stroke-linejoin="round"/>
+</svg>
