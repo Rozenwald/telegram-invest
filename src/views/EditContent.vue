@@ -1,11 +1,11 @@
 <template lang="pug">
-.wrapper
+.wrapper EditContent
 </template>
-
+  
 <script setup lang="ts">
-  import { defineAsyncComponent, ref } from 'vue'
 
 </script>
-
+  
 <style lang="sass">
+
 </style>

@@ -1,6 +1,5 @@
 <template lang="pug">
 .selector(:style="{ width: `${props.width}%` }")
-  .subtitle(v-if="props.title") {{props.title}}
   s-row.header(
     @click="isActive()"
     justify="space-between"
@@ -14,7 +13,7 @@
       @keydown.enter="isActive()"
       :style="{ height: `${height}px`, 'background-color': `${props.color}`, 'color': `${props.textColor}` }"
       :class="{ isActive: active, isError: isError, isSuccess: (isError == '' && unfocus), }"
-    ) {{selected}}
+    ) {{title}}
     s-icon.header__icon(
       name="triangle"
       :width="10"
@@ -27,23 +26,23 @@
     :class="{ isActive: active }"
     :style="{ 'background-color': `${props.color}` }"
   )
-    .selector__item(
-      v-for="(item, index) in data"
-      :key="index"
+    s-checkbox.selector__item(
+      v-for="(item, index) in props.modelValue"
+      v-model="props.modelValue[index]"
+      :key="item"
       :class="{ isActive: active }"
       @mousedown.prevent
       @click="chooseSelected(item)"
       @keydown.enter="chooseSelected(item)"
-    ) {{item}}
+    )
 
 </template>
 
 <script setup lang="ts">
-  import { ref, watch, onMounted, computed } from 'vue';
+  import { ref, onMounted, defineAsyncComponent, watch } from 'vue';
 
   export interface sSelectorProps {
-    modelValue: string,
-    data: object[],
+    modelValue: object[],
     isEmpty?: boolean,
     title?: string,
     isError?: string,
@@ -52,6 +51,8 @@
     color?: string,
     textColor?: string,
   }
+
+  const sCheckbox = defineAsyncComponent(() => import('./s-checkbox.vue'))
 
   const props = withDefaults(defineProps<sSelectorProps>(), {
     isEmpty: true,
@@ -70,17 +71,14 @@
   }>()
 
   onMounted(() => {
-    if (props.isEmpty == false) emit('update:modelValue', props.data[0])
+    console.log(props)
   })
 
   function chooseSelected(item: string) {
     console.log('choose')
-    emit('update:modelValue', item)
-    selected.value = item
-    console.log(active.value )
+    // emit('update:modelValue', item)
+    // selected.value = item
     unfocus.value = true
-    active.value = false
-    console.log(active.value )
   }
 
   function handler() {
@@ -94,6 +92,11 @@
     console.log('isActive')
     active.value = !active.value;
   }
+
+  watch(props.modelValue, ()  => {
+    console.log('HUI')
+    console.log(props.modelValue)
+  })
 </script>
 
 <style lang="sass">

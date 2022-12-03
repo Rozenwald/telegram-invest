@@ -7,13 +7,20 @@
   font-family: Montserrat
   font-weight: 600
   &::-webkit-scrollbar
-    margin-left: 8px
-    width: 4px
+    height: 12px
+    width: 6px
+    padding: 4px
+    &:hover
+      height: 10px
   &::-webkit-scrollbar-track
     background-color: var(--white)
   &::-webkit-scrollbar-thumb
-    background-color: var(--grey)
-    border-radius: 16px
+    background-color: var(--blue-purple)
+    border-radius: 32px
+    &:horizontal
+      border: 2px solid var(--white)
+      &:hover
+        border: none
 
 body
   margin: 0

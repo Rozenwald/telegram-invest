@@ -1,5 +1,5 @@
 <template lang="pug">
-s-row(v-if="props.type == 'horizontal'" :width="100")
+s-row.wrap(v-if="props.horizontal" :width="100")
   .horizontal(
     v-if="!props.text"
     :style="{color: props.color}"
@@ -8,19 +8,25 @@ s-row(v-if="props.type == 'horizontal'" :width="100")
     .d-divider(:style="{color: props.color}")
     .d-text {{props.text}}
     .d-divider(:style="{color: props.color}")
-s-row.vertical(v-else :style="{color: props.color}")
+    
+s-row.vertical(v-if="props.vertical"  :style="{color: props.color}")
 </template>
 
 <script setup lang="ts">
-  import router from '@/router';
-import { onMounted } from 'vue';
+  import { onMounted, useAttrs } from 'vue';
   
-  const props = defineProps({
-    type: String,
-    text: String,
-    color: String,
+  export interface sDivider {
+    horizontal?: boolean,
+    vertical?: boolean,
+    text?: string,
+    color?: string,
+  }
+
+  const props = withDefaults(defineProps<sDivider>(), {
+    color: 'var(--black)',
   })
   onMounted(() => {
+    const atr = useAttrs()
     if (props.color) {
       const root = document.querySelector(':root');
       root?.style.setProperty('--border-color', props.color);

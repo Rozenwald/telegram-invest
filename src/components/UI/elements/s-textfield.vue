@@ -19,9 +19,8 @@
   const unfocus = ref(false)
 
   const props = defineProps<{
-    type: string,
-    title: string,
-    titleColor: string
+    title?: string,
+    titleColor?: string
     modelValue: string,
     isError?: string,
   }>()

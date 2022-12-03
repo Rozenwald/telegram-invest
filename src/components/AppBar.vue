@@ -1,5 +1,5 @@
 <template lang="pug">
-s-row.appbar(justify="space-between")
+s-row.appbar(v-if="isAuth" justify="space-between")
   s-row.left-side
     // s-icon(
     //   name="logo"
@@ -14,43 +14,20 @@ s-row.appbar(justify="space-between")
       s-column.title(:width="100")
         .title__text LEROY’S
         s-divider.divider(
-          type="horizontal"
+          horizontal
         )
     s-divider(
-      type="vertical"
+      vertical
     )
     .title Админ панель
   s-row.right-side(justify="center" align="space-evenly")
-
-    s-dropdown.notifications(justify="center" align="center")
-      template.header(v-slot:header)
-        s-row.header__icon(justify="center" align="center")
-          s-icon(
-            name="bell"
-            :width="32"
-            :height="32"
-          )
-      template(v-slot:body)
-        .body__wrapper
-          s-column.body__row(v-for="item in notifications" :key="item.name" justify="center" align="start")
-            .body__title {{item.title}}
-            s-row(align="center" justify="space-between")
-              s-row.body__text(justify="start" align="start") {{item.text}}
-              s-icon.body__arrow(
-                name="arrow"
-                :width="16"
-                :height="16"
-              )
-        s-divider.body__divider(type="horizontal" color="var(--graphite)")
-        s-row.body__all(align="center" justify="center")
-          .body__text Просмотреть все
-          s-icon.body__arrow(
-            name="arrow"
-            :width="16"
-            :height="16"
-            stroke="var(--blue-purple)"
-          )
-
+    s-row(:height="100")
+      input.search
+      s-icon(
+        name="search"
+        fill="var(--white)"
+        stroke="var(--white)"
+      )
     s-dropdown.menu(justify="center" align="center")
       template.header(v-slot:header)
         .header__photo
@@ -76,7 +53,7 @@ s-row.appbar(justify="space-between")
               :width="16"
               :height="16"
             )
-          s-divider.body__divider(type="horizontal" color="var(--graphite)")
+          s-divider.body__divider(horizontal color="var(--graphite)")
           s-row.body__row(align="center" justify="space-between")
             s-row
               s-icon.body__icon(name="exit")
@@ -96,28 +73,31 @@ s-row.appbar(justify="space-between")
               :width="16"
               :height="16"
             )
-
-auth-modal(v-model="isAuth")
-
 </template>
 
 <script setup lang="ts">
   //! Переписать табы со ссылками, чтобы через пкм можно было открыть новую страницу
   import router from '@/router';
-  import { ref, defineAsyncComponent, watch } from 'vue';
+  import { useUserStore } from '@/stores/user';
+  import { ref, defineAsyncComponent, watch, computed } from 'vue';
 
   const sSelector = defineAsyncComponent(() => import('./UI/elements/s-selector.vue'))
   const sDivider = defineAsyncComponent(() => import('./UI/elements/s-divider.vue'))
   const authModal= defineAsyncComponent(() => import('./UI/modals/auth-modal.vue'))
 
-  const isAuth = ref(false)
   const page = ref('home')
+
+  const isAuth = computed(() => {
+    return useUserStore().getAuthStatus
+  })
+
   const notifications = [
     { title: 'Проверка хэша', text: '117 Пользователей предоставили для проверки хэш транзакций' },
     { title: 'Проверка хэша', text: '117 Пользователей предоставили для проверки хэш транзакций' },
     { title: 'Проверка хэша', text: '117 Пользователей предоставили для проверки хэш транзакций' },
     { title: 'Проверка хэша', text: '117 Пользователей предоставили для проверки хэш транзакций' },
   ]
+
   const menu = [
     { icon: 'money', text: 'Выплаты' },
     { icon: 'letter', text: 'Рассылка' },
@@ -134,10 +114,6 @@ auth-modal(v-model="isAuth")
     console.log(isAuth.value)
   })
 
-  function openRegistrationModal() {
-    console.log(isAuth.value)
-    isAuth.value = !isAuth.value
-  }
 </script>
 
 <style lang="sass">
@@ -168,12 +144,13 @@ auth-modal(v-model="isAuth")
   height: 100%
   text-align: center
   margin-right: 32px
-  .notifications
-    margin: 0 8px
-    height: 100%
   .menu
     margin: 0 8px
     height: 100%
+  .search
+    height: 58px
+    padding: 8px 16px
+    margin: 0 8px 0 0
 
 .notifications
   .header

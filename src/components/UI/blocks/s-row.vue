@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, reactive, ref, computed, watch } from 'vue';
+  import { reactive } from 'vue';
 
   export interface sRowProps {
     align?: string,

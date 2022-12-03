@@ -1,20 +1,28 @@
 <template lang="pug">
 .container(@click="changeStatus()")
-  input(v-model="status" type="checkbox")
-  label(v-if="props.text") {{props.text}}
+  input(v-model="props.modelValue.visible" type="checkbox")
+  label(v-if="props.modelValue.value") {{props.modelValue.value}}
 </template>
 
 <script setup lang="ts">
-  import router from '@/router';  
-  import { ref } from 'vue';
-  const props = defineProps({
-    text: String,
-  })
+  import { reactive, ref, toRefs } from 'vue';
 
-  const status = ref(false)
+  const props = defineProps<{
+    modelValue: {
+      visible: boolean,
+      value: string,
+    },
+  }>()
+
+  const emit = defineEmits<{
+    (evt: 'update:modelValue', item: object): void,
+  }>()
+
+  const item = toRefs(props.modelValue)
 
   function changeStatus() {
-    status.value = !status.value;
+    item.visible.value = !item.visible.value;
+    emit('update:modelValue', item)
   }
 </script>
 

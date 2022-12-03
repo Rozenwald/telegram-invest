@@ -14,6 +14,6 @@ import AppBar from '@/components/AppBar.vue'
 .router {
   min-height: 100%;
   overflow-x: hidden;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9
 }
 </style>
