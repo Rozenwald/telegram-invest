@@ -59,13 +59,13 @@
     color: 'var(--white)',
     textColor: 'var(--black)',
   })
-
+  type data = string | object
   const active = ref(false)
   const unfocus = ref(false)
   const selected = ref(props.modelValue)
 
   const emit = defineEmits<{
-    (evt: 'update:modelValue', item:string): void,
+    (evt: 'update:modelValue', item: data): void,
     (evt: 'unfocus'): void,
   }>()
 

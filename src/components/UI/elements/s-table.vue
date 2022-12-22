@@ -92,8 +92,7 @@
     &__package
       min-width: 20%
       width: 20%
-
-      argin: 0 8px 0 0
+      margin: 0 8px 0 0
 
 .row
   min-width: 100%

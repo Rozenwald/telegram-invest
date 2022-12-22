@@ -1,26 +1,21 @@
 <template lang="pug">
 .dropdown(
   :style="stylesObject"
-  @click="activated()"
-  @mouseover="activated()"
-  @mouseout="deactivated()"
 )
   .subtitle(v-if="props.title") {{props.title}}
-  s-row.header(
-  )
+  s-row.header
     slot(name="header")
   .body(
-    v-show="active"
+    v-show="props.bodyStatus"
   )
-    .layer
-    .content
-      slot(name="body")
+    slot(name="body")
 </template>
 
 <script setup lang="ts">
   import { ref, watch, onMounted, computed, reactive } from 'vue';
 
   export interface DropDownProps {
+    bodyStatus: boolean
     align?: string,
     justify?: string,
     height?: number | string,
@@ -30,6 +25,7 @@
   const props = withDefaults(defineProps<DropDownProps>(), {
     justify: 'center',
     align: 'center',
+    bodyStatus: false,
   })
 
   const stylesObject = reactive({
@@ -39,15 +35,9 @@
     'justify-content': props.justify,
   })
 
-  const active = ref(false)
-
-  function activated() {
-    active.value = true;
-  }
-
-  function deactivated() {
-    active.value = false;
-  }
+  onMounted(() => {
+    console.log(props.bodyStatus)
+  })
 </script>
 
 <style lang="sass">
@@ -56,20 +46,9 @@
   cursor: pointer
   .header
     display: flex
-    height: 100%
-  .layer
-    width: 100%
-    background-color: var(--graphite)
-    display: flex
-    flex-direction: column
-    height: 8px
-    opacity: 0
   .body
-    position: absolute
     display: flex
     flex-direction: column
-    right: 0
-    z-index: 1
 
 .body
   .content

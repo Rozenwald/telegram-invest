@@ -13,8 +13,10 @@ app.use(pinia)
 app.use(router)
 
 blocks.forEach(component => {
-  console.log(component);
-  app.component(component?.__name, component)
+  if (component) {
+    console.log(component.__name)
+    app.component(component.__name as string, component)
+  }
 })
 
 app.mount('#app')

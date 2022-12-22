@@ -21,7 +21,7 @@ s-column.table-wrapper(:width="100")
       )
     s-row(:width="40" justify="end")
       s-btn.btn(
-        @click="route('user-page')"
+        @click="open()"
         textColor="var(--white)"
         color="var(--blue-purple)"
       ) Скопировать никнеймы
@@ -36,7 +36,31 @@ s-column.table-wrapper(:width="100")
     :headers="tableHeaders"
     :data="tableData"
   )
-    template(v-slot:buttton)
+    template(v-slot:button)
+  
+  s-modal(v-model="modalVisible" :width="40")
+    s-column.modal-wrapper(:width="100" align="start")
+      s-row(:width="100" justify="end")
+        button.btn-icon(@click="close()")
+          s-icon(
+            :width="24"
+            :height="24"
+            name="close"
+            fill="var(--black)"
+            stroke="var(--black)")
+      .title Подарить
+      .info-wrap
+        .subtitle Аккаунт
+        .text @name1234
+      .info-wrap
+        .subtitle Приз
+        .text Airpods
+      .info-wrap
+        .subtitle Стоимость в USDT
+        .text 1236,00 USDT
+      s-row.btns(:width="100")
+        s-btn(:width="50" color="var(--blue-purple)") Выплачено
+        s-btn.btn-black-border(:width="50" textColor="var(--black)") Отмена
 </template>
   
 <script setup lang="ts">
@@ -49,6 +73,7 @@ s-column.table-wrapper(:width="100")
 
   const rowCount = ref<number>(5)
   const packages = ref<string>('Все пакеты')
+  const modalVisible = ref(false)
 
   const tableHeaders = reactive([
     {
@@ -122,8 +147,46 @@ s-column.table-wrapper(:width="100")
         lastAward: 'Airpods',
       },
     ])
+
+
+  function close() {
+    modalVisible.value = false
+  }
+  function open() {
+    modalVisible.value = true
+  }
 </script>
   
 <style lang="sass">
-
+.modal-wrapper
+  padding: 12px
+  .info-wrap
+    margin: 8px 0
+    .subtitle
+      font-size: 1vw
+      font-weight: 500
+      color: var(--dark-grey)
+    .text
+      font-weight: 700
+      margin: 0
+  .title
+    margin: 0 0 16px 0
+  .text
+    margin: 16px 0
+    font-weight: 500
+  .btns
+    margin: 16px 0
+    gap: 16px
+  .btn-icon
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 0
+    border-radius: 100%
+    border: none
+    width: 32px
+    height: 32px
+    background-color: var(--white)
+    &:hover
+      background-color: var(--grey)
 </style>

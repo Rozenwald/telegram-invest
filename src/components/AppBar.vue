@@ -22,12 +22,12 @@ s-row.appbar(v-if="isAuth" justify="space-between")
     .title Админ панель
   s-row.right-side(justify="center" align="space-evenly")
     s-row(:height="100")
-      input.search
       s-icon(
         name="search"
         fill="var(--white)"
         stroke="var(--white)"
       )
+      input.search
     s-dropdown.menu(justify="center" align="center")
       template.header(v-slot:header)
         .header__photo
@@ -38,32 +38,7 @@ s-row.appbar(v-if="isAuth" justify="space-between")
           :height="16"
         )
       template.body(v-slot:body)
-        .body__wrapper(v-if="isAuth")
-          s-row.body__row(v-for="item in menu" :key="item.name" align="center" justify="space-between")
-            s-row
-              s-icon.body__icon(
-                :name="item.icon"
-                fill="var(--white)"
-                stroke="none"
-
-              )
-              .body__text(justify="start") {{item.text}}
-            s-icon.body__arrow(
-              name="arrow"
-              :width="16"
-              :height="16"
-            )
-          s-divider.body__divider(horizontal color="var(--graphite)")
-          s-row.body__row(align="center" justify="space-between")
-            s-row
-              s-icon.body__icon(name="exit")
-              .body__text Выйти
-            s-icon.body__arrow(
-              name="arrow"
-              :width="16"
-              :height="16"
-            )
-        .body__wrapper(v-else)
+        .body__wrapper()
           s-row.body__row(@click="openRegistrationModal()" align="center" justify="space-between")
             s-row
               s-icon.body__icon(name="exit")
@@ -117,6 +92,9 @@ s-row.appbar(v-if="isAuth" justify="space-between")
 </script>
 
 <style lang="sass">
+.content
+  margin-top: 8px
+
 .appbar
   width: 100%
   height: 80px
@@ -201,7 +179,9 @@ s-row.appbar(v-if="isAuth" justify="space-between")
         transform: scale(1.05)
 
 .menu
+  padding: 0 16px
   .header
+    height: 100%
     &__photo
       width: 50px
       height: 50px
@@ -218,11 +198,19 @@ s-row.appbar(v-if="isAuth" justify="space-between")
         transform: rotate(90deg)
         transition: all 0.5s ease 0s
 
+  .layer
+    width: 100%
+    background-color: var(--graphite)
+    display: flex
+    flex-direction: column
+    height: 8px
+    opacity: 0
+
   .body
     text-align: center
     overflow: hidden
     &__wrapper
-      margin: 16px 2px
+      margin: 16px 0
     &__row
       padding: 8px 32px
       margin: 8px 0

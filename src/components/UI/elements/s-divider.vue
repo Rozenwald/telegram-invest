@@ -28,7 +28,7 @@ s-row.vertical(v-if="props.vertical"  :style="{color: props.color}")
   onMounted(() => {
     const atr = useAttrs()
     if (props.color) {
-      const root = document.querySelector(':root');
+      const root = document.querySelector(':root') as HTMLElement;
       root?.style.setProperty('--border-color', props.color);
     }
   })
@@ -58,7 +58,7 @@ s-row.vertical(v-if="props.vertical"  :style="{color: props.color}")
   text-align: center
   .d-text
     width: 50%
-    weight: 700
+    font-weight: 700
     font-size: 1.4vw
     color: var(--dark-grey)
     margin-right: 5px

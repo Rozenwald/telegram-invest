@@ -25,7 +25,7 @@ s-column.table-wrapper(:width="100")
             .text h183h4120432912j3833929j29109209e2
             s-icon(name="copy" fill="var(--dark-grey)" :width="16" :height="16")
       s-row(:width="100" align="center" justify="space-between")
-        s-btn(:width="48" color="var(--blue-purple)") Рассчитать
+        s-btn(:width="48" @click="open()" color="var(--blue-purple)") Рассчитать
         s-btn.btn-black-border(:width="48" color="var(--white)" textColor="var(--black)") Не оплачено
   s-row.navigation(:width="100")
     button.navigation__btn() &lt
@@ -74,6 +74,23 @@ s-column.table-wrapper(:width="100")
     :data="tableData"
   )
     template(v-slot:buttton)
+
+  s-modal(v-model="modalVisible" :width="40")
+    s-column.modal-wrapper(:width="100" align="start")
+      s-row(:width="100" justify="end")
+        button.btn-icon(@click="close()")
+          s-icon(
+            :width="24"
+            :height="24"
+            name="close"
+            fill="var(--black)"
+            stroke="var(--black)")
+      .title Оплата пакета "Basic"
+      .text Вы проверили хэш транзакции
+      s-row.btns(:width="100")
+        s-btn(:width="50" color="var(--blue-purple)") Оплачено
+        s-btn.btn-black-border(:width="50" textColor="var(--black)") Отмена
+
 </template>
   
 <script setup lang="ts">
@@ -87,6 +104,7 @@ s-column.table-wrapper(:width="100")
   const rowCount = ref<number>(5)
   const packages = ref<string>('Все пакеты')
 
+  const modalVisible = ref(false)
   const hash = ref(6)
   const page = ref(1)
   const btns = [1, 2, 3, 4, 5]
@@ -208,9 +226,38 @@ s-column.table-wrapper(:width="100")
     console.log(page)
     console.log(page.value)
   }
+
+  function close() {
+    modalVisible.value = false
+  }
+  function open() {
+    modalVisible.value = true
+  }
 </script>
   
 <style lang="sass">
+.modal-wrapper
+  padding: 12px
+  .title
+    margin: 16px 0
+  .text
+    margin: 16px 0
+    font-weight: 500
+  .btns
+    margin: 16px 0
+    gap: 16px
+  .btn-icon
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 0
+    border-radius: 100%
+    border: none
+    width: 32px
+    height: 32px
+    background-color: var(--white)
+    &:hover
+      background-color: var(--grey)
 
 .slider
   width: 100%

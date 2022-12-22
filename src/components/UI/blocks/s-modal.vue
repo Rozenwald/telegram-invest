@@ -1,6 +1,7 @@
 <template lang="pug">
 Teleport(to="#modals")
-  .s-modal
+  .s-modal(v-if="modelValue")
+    .overlay(@click="close()")
     .content(
       :style="{ width: `${width}%`}"
     )
@@ -11,6 +12,7 @@ Teleport(to="#modals")
   import { computed, ref, watch, onMounted } from 'vue';
 
   export interface modalProps {
+    modelValue: boolean
     width?: number | string,
   }
 
@@ -19,8 +21,13 @@ Teleport(to="#modals")
   })
 
   const emit = defineEmits<{
-    (evt: 'update:modelValue', item:string): void,
+    (evt: 'update:modelValue', status: boolean): void,
   }>()
+
+  function close() {
+    emit('update:modelValue', false)
+    console.log('out')
+  }
 
 </script>
 
@@ -35,7 +42,14 @@ Teleport(to="#modals")
     justify-content: center
     align-items: center
     background-color: rgba(0, 0, 0, 0.5)
+    .overlay
+      width: 100%
+      height: 100%
+      background-color: rgba(0, 0, 0, 0.4)
+      backdrop-filter: blur(5px)
+      opacity: 1
     .content
+      padding: 12px
       z-index: 100
       border-radius: 10px
       background-color: var(--white)
